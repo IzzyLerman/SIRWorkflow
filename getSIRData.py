@@ -1,9 +1,5 @@
-import numpy as np
-import pandas as pd
-import math
-import datetime as dt
 
-def _jhu_us_daily_url(date: dt.date) -> str:
+def _jhu_us_daily_url(date: datetime.date) -> str:
     # JHU file naming convention: MM-DD-YYYY.csv
     date_str = date.strftime("%m-%d-%Y")
     return (
@@ -11,7 +7,7 @@ def _jhu_us_daily_url(date: dt.date) -> str:
         f"master/csse_covid_19_data/csse_covid_19_daily_reports_us/{date_str}.csv"
     )
 
-def get(col: str, required: bool = True, default=None):
+def get(df: pandas.DataFrame, col: str, required: bool = True, default=None):
     col_l = col.lower()
     if col_l not in df.columns:
         if required:
@@ -21,7 +17,7 @@ def get(col: str, required: bool = True, default=None):
 
 
 def getSIRData() -> None:
-    start_date = dt.date(2021,3,15)
+    start_date = datetime.date(2021,3,15)
     days = 10
     infectious_period_days = 7
     oregon_2020_pop = 4237256
@@ -31,10 +27,10 @@ def getSIRData() -> None:
     records = []
 
     for k in range(days):
-        d = start_date + dt.timedelta(days=k)
+        d = start_date + datetime.timedelta(days=k)
         url = _jhu_us_daily_url(d)
         try:
-            df = pd.read_csv(url)
+            df = pandas.read_csv(url)
         except Exception as e:
             raise RuntimeError(f"failed to fetch {url}: {e}")
 
@@ -49,10 +45,10 @@ def getSIRData() -> None:
 
         row = row.iloc[0]
 
-        confirmed = float(get("confirmed"))
-        deaths = float(get("deaths"))
-        recovered = float(get("recovered", required=False, default=0.0))
-        active = float(get("active", required=False, default=confirmed - deaths - recovered))
+        confirmed = float(get(df,"confirmed"))
+        deaths = float(get(df,"deaths"))
+        recovered = float(get(df,"recovered", required=False, default=0.0))
+        active = float(get(df,"active", required=False, default=confirmed - deaths - recovered))
 
         N = oregon_2020_pop
 
@@ -70,7 +66,7 @@ def getSIRData() -> None:
             }
         )
 
-    data = pd.DataFrame(records)
+    data = pandas.DataFrame(records)
     day0 = data.iloc[0]
 
 
@@ -81,10 +77,10 @@ def getSIRData() -> None:
         # Not enough data to fit a slope;
         raise RuntimeError(f"Not enough non-zero I values. Try increasing t_max")
     else:
-        t_vals = np.arange(len(data))[mask].astype(float)
-        log_I = np.log(data.loc[mask, "I"].values.astype(float))
+        t_vals = numpy.arange(len(data))[mask].astype(float)
+        log_I = numpy.log(data.loc[mask, "I"].values.astype(float))
         # Fit log(I_t) ~ a + r * t  => slope = r
-        slope, intercept = np.polyfit(t_vals, log_I, 1)
+        slope, intercept = numpy.polyfit(t_vals, log_I, 1)
         r_est = float(slope)
 
     # Recovery rate gamma from assumed infectious period
@@ -93,7 +89,7 @@ def getSIRData() -> None:
     beta = r_est + gamma
     beta = max(beta, 0.0)
 
-    out_data = pd.DataFrame({
+    out_data = pandas.DataFrame({
         "beta": [beta],
         "gamma": [gamma],
         "N": [float(day0["N"])],
