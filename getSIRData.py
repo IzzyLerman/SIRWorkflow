@@ -4,11 +4,10 @@ import math
 import datetime as dt
 
 def _jhu_us_daily_url(date: dt.date) -> str:
-    """Build raw GitHub URL for a JHU US daily report for a given date."""
     # JHU file naming convention: MM-DD-YYYY.csv
     date_str = date.strftime("%m-%d-%Y")
     return (
-        "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/"
+        "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/refs/heads/"
         f"master/csse_covid_19_data/csse_covid_19_daily_reports_us/{date_str}.csv"
     )
 
