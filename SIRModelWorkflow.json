@@ -41,9 +41,9 @@
     }
   },
   "ActionContainers": {
-    "juliaSIRModel": "izzylerman/faasr-githubactions-julia-sir",
-    "getData": "ghcr.io/faasr/github-actions-python:latest",
-    "processData": "ghcr.io/faasr/github-actions-r:latest"
+    "solve": "izzylerman/faasr-githubactions-julia-sir",
+    "getData": "izzylerman/github-actions-python:latest",
+    "processData": "izzylerman/github-actions-r:latest"
   },
   "FunctionInvoke": "getData",
   "DefaultDataStore": "S3",

@@ -4,7 +4,7 @@ import CSV
 using DataFrames
 
 #== 
-# We write the ODE in-place for performance benefits:
+# Write the ODE in-place for performance benefits:
 # https://docs.sciml.ai/DiffEqDocs/stable/getting_started/#Example-2:-Solving-Systems-of-Equations
 # du: output array containing [ dS, dI, dR]
 # u: initial conditions [ S, I, R ]
