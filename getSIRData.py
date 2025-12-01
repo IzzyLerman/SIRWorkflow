@@ -1,22 +1,25 @@
 
-def _jhu_us_daily_url(date: datetime.date) -> str:
-    # JHU file naming convention: MM-DD-YYYY.csv
-    date_str = date.strftime("%m-%d-%Y")
-    return (
-        "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/refs/heads/"
-        f"master/csse_covid_19_data/csse_covid_19_daily_reports_us/{date_str}.csv"
-    )
-
-def get(df: pandas.DataFrame, col: str, required: bool = True, default=None):
-    col_l = col.lower()
-    if col_l not in df.columns:
-        if required:
-            raise RuntimeError(f"Required column '{col}' missing in {url}. ")
-        return default
-    return row[col_l]
-
 
 def getSIRData() -> None:
+
+
+    def _jhu_us_daily_url(date: datetime.date) -> str:
+        # JHU file naming convention: MM-DD-YYYY.csv
+        date_str = date.strftime("%m-%d-%Y")
+        return (
+            "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/refs/heads/"
+            f"master/csse_covid_19_data/csse_covid_19_daily_reports_us/{date_str}.csv"
+        )
+
+    def get(df: pandas.DataFrame, col: str, required: bool = True, default=None):
+        col_l = col.lower()
+        if col_l not in df.columns:
+            if required:
+                raise RuntimeError(f"Required column '{col}' missing in {url}. ")
+            return default
+        return row[col_l]
+
+
     start_date = datetime.date(2021,3,15)
     days = 10
     infectious_period_days = 7
