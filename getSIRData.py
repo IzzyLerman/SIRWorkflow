@@ -1,3 +1,5 @@
+from datetime import datetime
+
 def getSIRData() -> None:
 
 
@@ -18,7 +20,7 @@ def getSIRData() -> None:
         return row[col_l]
 
 
-    start_date = 0 #datetime.datetime.date(2021,3,15)
+    start_date = datetime.date(2021,3,15)
     days = 10
     infectious_period_days = 7
     oregon_2020_pop = 4237256
@@ -28,7 +30,7 @@ def getSIRData() -> None:
     records = []
 
     for k in range(days):
-        d = start_date + k #datetime.datetime.timedelta(days=k)
+        d = start_date + datetime.timedelta(days=k)
         url = _jhu_us_daily_url(d)
         try:
             df = pandas.read_csv(url)
