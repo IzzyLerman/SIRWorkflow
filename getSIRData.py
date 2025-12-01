@@ -21,7 +21,7 @@ def get(col: str, required: bool = True, default=None):
 
 
 def getSIRData() -> None:
-    start_date = dt.date(2020,3,15)
+    start_date = dt.date(2021,3,15)
     days = 10
     infectious_period_days = 7
     oregon_2020_pop = 4237256
