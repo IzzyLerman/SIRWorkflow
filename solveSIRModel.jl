@@ -27,7 +27,7 @@ function sirModel!(du, u, p, t)
 end
 
 function solveSIRModel()
-    inputFile = "data.csv"
+    inputFile = "SIR_init_conditions.csv"
     faasr_get_file(inputFile, inputFile) 
 
     # Expecting columns: beta, gamma, N, S0, I0, R0, tmax
@@ -68,3 +68,5 @@ function solveSIRModel()
 
 
 end
+
+solveSIRModel()

@@ -32,11 +32,13 @@ processSIRData <- function() {
         t_peak_pred        = t_peak_pred,
         peak_prevalence    = I_peak_pred / N,
         R_final            = R_final,
-        attack_rate        = attack_rt,
+        attack_rate        = attack_rt
     )
 
-    write.csv(summary_df, summary_file, row.names = FALSE)
-    faasr_put_file(summary_file, summary_file)
+    write.csv(summary_df, in_file, row.names = FALSE)
+    faasr_put_file(in_file, in_file)
 
     return(0)
 }
+
+processSIRData()

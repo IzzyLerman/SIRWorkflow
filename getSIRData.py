@@ -23,13 +23,14 @@ def getSIRData() -> None:
         return row[col_l]
 
 
-    start_date = datetime.date(2021,3,15)
-    days = 10
+    start_date = datetime.date(2020,4,14)
+    days = 30
     infectious_period_days = 7
     oregon_2020_pop = 4237256
+    ny_2020_pop = 20201249
     out_filename = "SIR_init_conditions.csv"
 
-    state_name = "Oregon"
+    state_name = "New York"
     records = []
 
     for k in range(days):
@@ -77,6 +78,7 @@ def getSIRData() -> None:
 
 
 
+
     # Estimate growth rate r from log(I_t) on days where I_t > 0
     mask = data["I"] > 0
     if mask.sum() < 2:
@@ -95,12 +97,16 @@ def getSIRData() -> None:
     beta = r_est + gamma
     beta = max(beta, 0.0)
 
+    I0 = max(float(day0["I"]), 1.0) # avoid zero for logs
+    R0 = max(float(day0["R"]), 0.0)
+    N = oregon_2020_pop
+
     out_data = pandas.DataFrame({
         "beta": [beta],
         "gamma": [gamma],
-        "N": [float(day0["N"])],
-        "I0": [max(float(day0["I"]), 1.0)], # avoid zero for logs
-        "R0": [max(float(day0["R"]), 0.0)],
+        "N": [N],
+        "I0": [I0], 
+        "R0": [R0],
         "S0": [max(N - I0 - R0, 0.0)],
         "tmax": [days]
     })
@@ -109,4 +115,5 @@ def getSIRData() -> None:
     faasr_put_file(out_filename, out_filename)
 
 
-    
+if __name__ == '__main__':
+    getSIRData()
