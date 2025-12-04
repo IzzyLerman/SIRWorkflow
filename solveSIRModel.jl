@@ -69,4 +69,5 @@ function solveSIRModel()
 
 end
 
-solveSIRModel()
+#solveSIRModel()
+
