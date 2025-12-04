@@ -35,8 +35,8 @@ processSIRData <- function() {
         attack_rate        = attack_rt
     )
 
-    write.csv(summary_df, in_file, row.names = FALSE)
-    faasr_put_file(local_file = in_file, remote_file = in_file)
+    write.csv(summary_df, out_file, row.names = FALSE)
+    faasr_put_file(local_file = out_file, remote_file = out_file)
 
     return(0)
 }
