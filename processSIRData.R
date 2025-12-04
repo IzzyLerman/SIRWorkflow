@@ -3,7 +3,7 @@ processSIRData <- function() {
     out_file = "sir_summary.csv"
     horizon_days = 60
 
-    faasr_get_file(in_file, in_file)
+    faasr_get_file(remote_file = in_file, local_file = in_file)
 
     pred <- read.csv(in_file, stringsAsFactors = FALSE)
 
@@ -36,9 +36,8 @@ processSIRData <- function() {
     )
 
     write.csv(summary_df, in_file, row.names = FALSE)
-    faasr_put_file(in_file, in_file)
+    faasr_put_file(local_file = in_file, remote_file = in_file)
 
     return(0)
 }
 
-processSIRData()
