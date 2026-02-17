@@ -13,6 +13,8 @@ using DataFrames
 ==#
 
 function sirModel!(du, u, p, t)
+
+
     S, I, R = u
     Beta, Gamma, N = p
 
@@ -27,6 +29,9 @@ function sirModel!(du, u, p, t)
 end
 
 function solveSIRModel()
+
+    println("Plots check: $(isdefined(Plots, :plot!)") 
+
     inputFile = "SIR_init_conditions.csv"
     faasr_get_file(inputFile, inputFile) 
 
