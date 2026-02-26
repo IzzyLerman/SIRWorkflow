@@ -30,7 +30,7 @@ end
 
 function solveSIRModel()
 
-    println("Plots check: $(isdefined(Plots, :plot!)") 
+    println("Plots check: $(isdefined(Plots, :plot!))") 
 
     inputFile = "SIR_init_conditions.csv"
     faasr_get_file(inputFile, inputFile) 
